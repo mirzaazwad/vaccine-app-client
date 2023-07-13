@@ -8,7 +8,7 @@ const Login = () => {
   const [nid, setNid] = useState("");
   const [password, setPassword] = useState("");
   const [validNid, setValidNid] = useState(false);
-  const [responseMessege, setResponseMessage] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [disableFields, setDisableFields] = useState(false);
@@ -29,11 +29,11 @@ const Login = () => {
       setResponseMessage("");
     };
 
-    if (error) {
+    if (errorMessage || responseMessage) {
       const timer = setTimeout(clearMessages, 5000);
       return () => clearTimeout(timer);
     }
-  }, [errorMessage, responseMessege]);
+  }, [errorMessage, responseMessage]);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -137,7 +137,7 @@ const Login = () => {
                     </div>
                   </Link>
                   {errorMessage && <RedAlert alert_message={errorMessage} />}
-                  {!errorMessage && responseMessege && <GreenAlert alert_message={responseMessege} />}
+                  {!errorMessage && responseMessage && <GreenAlert alert_message={responseMessage} />}
                   <div className="relative">
                     <button
                       className={`w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white  bg-indigo-500

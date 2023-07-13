@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authPage from "../assets/authPage.png";
 import axios from "axios";
@@ -12,9 +12,21 @@ const SignUp = () => {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [validNid, setValidNid] = useState(false);
-  const [responseMessege, setResponseMessage] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
   const [disableFields, setDisableFields] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const clearMessages = () => {
+      setErrorMessage("");
+      setResponseMessage("");
+    };
+
+    if (errorMessage || responseMessage) {
+      const timer = setTimeout(clearMessages, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage, responseMessage]);
 
   const handleKeyPress = (e) => {
     const re = /^[0-9]*$/;
@@ -162,7 +174,9 @@ const SignUp = () => {
                     </div>
                   </Link>
                   {errorMessage && <RedAlert alert_message={errorMessage} />}
-                  {!errorMessage && responseMessege && <GreenAlert alert_message={responseMessege} />}
+                  {!errorMessage && responseMessage && (
+                    <GreenAlert alert_message={responseMessage} />
+                  )}
                   <div className="relative">
                     <button
                       type="submit"
