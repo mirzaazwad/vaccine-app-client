@@ -1,9 +1,10 @@
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake?.vfs;
+pdfMake.vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : pdfMake.vfs;;
 import axios from 'axios';
 
 const PdfCertificate = ({nid}) => {
+
 
   const getUserInformation=async()=>{
     const result=await axios.get("https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine/view_vaccines_completed/"+nid)
