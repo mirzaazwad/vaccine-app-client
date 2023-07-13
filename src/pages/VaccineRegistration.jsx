@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import vaccineRegistration from "../assets/vaccineRegistration.png";
 import HospitalDropdown from "../components/HospitalDropdown";
-import VaccineDropdown from "../components/VaccineDropDown";
+import VaccineDropDown from "../components/VaccineDropDown";
 
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
@@ -53,7 +53,7 @@ const VaccineRegistration = () => {
                       >
                         Vaccine
                       </p>
-                      <VaccineDropdown onSelect={(selectedVaccine) => setVaccine(selectedVaccine)}/>
+                      <VaccineDropDown onSelect={(selectedVaccine) => setVaccine(selectedVaccine)}/>
                     </div>
 
                     
