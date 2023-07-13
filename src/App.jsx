@@ -23,7 +23,7 @@ function App() {
       };
 
       const res = await axios.get(
-        "http://localhost:5000/api/auth/is_verify",
+        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/auth/is_verify",
         config
       );
 
