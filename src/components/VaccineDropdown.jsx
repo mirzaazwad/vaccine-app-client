@@ -35,7 +35,7 @@ const VaccineDropdown = ({ onSelect }) => {
       (option) => option._id === selectedValue
     );
     if (selectedOption) {
-      onSelect(selectedOption._id);
+      onSelect(selectedOption);
       console.log(selectedOption.vaccine_name);
     }
   };

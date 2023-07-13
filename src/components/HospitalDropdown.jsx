@@ -25,7 +25,7 @@ const HospitalDropdown = ({ onSelect }) => {
       (option) => option._id === selectedValue
     );
     if (selectedOption) {
-      onSelect(selectedOption._id);
+      onSelect(selectedOption.hospital_name);
       console.log(selectedOption.hospital_name);
     }
   };

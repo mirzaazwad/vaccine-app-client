@@ -46,6 +46,7 @@ const Login = () => {
       if (response.success) {
         localStorage.setItem("token", response.token)
         setDisableFields(true);
+        localStorage.setItem("nid", nid);
         window.location.reload()
       } else {
         setResponseMessage(response.message)
