@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import login from "../assets/login.png";
 import axios from "axios";
+import GreenAlert from "../components/GreenAlert";
+import RedAlert from "../components/RedAlert";
 const Login = () => {
   const [nid, setNid] = useState("");
   const [password, setPassword] = useState("");
   const [validNid, setValidNid] = useState(false);
   const [responseMessege, setResponseMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [disableFields, setDisableFields] = useState(false);
   const handleKeyPress = (e) => {
@@ -20,7 +23,17 @@ const Login = () => {
     setNid(e.target.value);
   };
 
- 
+  useEffect(() => {
+    const clearMessages = () => {
+      setErrorMessage("");
+      setResponseMessage("");
+    };
+
+    if (error) {
+      const timer = setTimeout(clearMessages, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage, responseMessege]);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -46,13 +59,17 @@ const Login = () => {
       if (response.success) {
         localStorage.setItem("token", response.token)
         setDisableFields(true);
+        setErrorMessage("");
+        setResponseMessage(response.message)
         localStorage.setItem("nid", nid);
         window.location.reload()
       } else {
+        setErrorMessage("");
         setResponseMessage(response.message)
       }
     } catch (error) {
-
+      setResponseMessage("");
+      setErrorMessage(response.message);
     }
   };
 
@@ -119,6 +136,8 @@ const Login = () => {
                       Don't Have An Account? Sign Up
                     </div>
                   </Link>
+                  {errorMessage && <RedAlert alert_message={errorMessage} />}
+                  {!errorMessage && responseMessege && <GreenAlert alert_message={responseMessege} />}
                   <div className="relative">
                     <button
                       className={`w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white  bg-indigo-500
