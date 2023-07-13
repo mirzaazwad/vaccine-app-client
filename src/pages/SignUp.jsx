@@ -33,7 +33,7 @@ const SignUp = () => {
 
     try {
       const user = await axios.post(
-        "/api/auth/register",
+        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/auth/register",
         {
           n_id: nid,
           password
