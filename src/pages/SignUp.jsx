@@ -148,7 +148,7 @@ const SignUp = () => {
                   border-gray-300 rounded-md"
                     />
                   </div>
-                  <Link to="/login">
+                  <Link to="/signin">
                     <div className="mt-1 hover:text-indigo-600 text-lg w-full mx-auto">
                       Already have an account? Log In
                     </div>
