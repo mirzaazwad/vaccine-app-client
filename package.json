@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy":"https://vaccine-app-server-kilfewcikq-uc.a.run.app/",
+  "proxy":"http://localhost:5000/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
