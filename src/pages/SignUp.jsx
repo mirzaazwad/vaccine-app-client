@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authPage from "../assets/authPage.png";
 import axios from "axios";
+import RedAlert from "../components/RedAlert";
+import GreenAlert from "../components/GreenAlert";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [nid, setNid] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [validNid, setValidNid] = useState(false);
-  const [responseMessege, setResponseMessage] = useState("");
-  const navigate = useNavigate();
+  const [responseMessage, setResponseMessage] = useState("");
   const [disableFields, setDisableFields] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const clearMessages = () => {
+      setErrorMessage("");
+      setResponseMessage("");
+    };
+
+    if (errorMessage || responseMessage) {
+      const timer = setTimeout(clearMessages, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage, responseMessage]);
 
   const handleKeyPress = (e) => {
     const re = /^[0-9]*$/;
@@ -46,12 +61,17 @@ const SignUp = () => {
       const response = user.data;
       if (response.success) {
         setDisableFields(true);
+        setErrorMessage("");
         navigate("/signin");
         // window.location.reload();
       } else {
+        setErrorMessage("");
         setResponseMessage(response.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      setResponseMessage("");
+      setErrorMessage(response.message);
+    }
   };
 
   return (
@@ -76,7 +96,7 @@ const SignUp = () => {
                   Sign up for an account
                 </p>
                 <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                <div className="relative">
+                  <div className="relative">
                     <p
                       className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                   absolute"
@@ -153,6 +173,10 @@ const SignUp = () => {
                       Already have an account? Log In
                     </div>
                   </Link>
+                  {errorMessage && <RedAlert alert_message={errorMessage} />}
+                  {!errorMessage && responseMessage && (
+                    <GreenAlert alert_message={responseMessage} />
+                  )}
                   <div className="relative">
                     <button
                       type="submit"
