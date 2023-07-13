@@ -36,7 +36,7 @@ const VaccineCardContainer = ({ nid }) => {
                     option.vaccination_date
                   ).toLocaleDateString()}
                   hospital_name={option.administeredAt}
-                  doses_taken={option.do}
+                  doses_taken={option.dose_no}
                 />
               ))}
             </div>
