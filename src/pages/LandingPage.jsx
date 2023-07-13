@@ -73,7 +73,7 @@ const LandingPage = () => {
                     </span>
                   </button>
                 </Link>
-                <Link to="/login">
+                <Link to="/signin">
                   <button
                     type="button"
                     title="Start buying"

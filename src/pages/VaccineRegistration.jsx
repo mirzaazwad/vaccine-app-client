@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import OnKeySearchDropdown from "../components/OnKeySearchDropdown";
 import vaccineRegistration from "../assets/vaccineRegistration.png";
+import HospitalDropdown from "../components/HospitalDropdown";
 
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
@@ -41,7 +42,8 @@ const VaccineRegistration = () => {
                       >
                         Hospital
                       </p>
-                      <OnKeySearchDropdown onSelect={setHospital}/>
+                      {/* <OnKeySearchDropdown onSelect={setHospital}/> */}
+                      <HospitalDropdown />
                     </div>
 
                     <div className="relative">

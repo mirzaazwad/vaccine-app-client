@@ -34,7 +34,7 @@ const Login = () => {
 
     try {
       const user = await axios.post(
-        "/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         {
           n_id: nid,
           password
