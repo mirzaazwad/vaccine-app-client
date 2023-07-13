@@ -36,8 +36,8 @@ const VaccineRegistration = () => {
                   <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
                   <div className="relative">
                       <p
-                        className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-4 mr-0 mb-0 ml-2 font-medium text-gray-600
-                    absolute z-10"
+                        className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-6 mr-0 mb-12 font-medium text-gray-600
+                    absolute"
                       >
                         Hospital
                       </p>
@@ -46,13 +46,15 @@ const VaccineRegistration = () => {
 
                     <div className="relative">
                       <p
-                        className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-4 mr-0 mb-0 ml-2 font-medium text-gray-600
-                    absolute z-10"
+                        className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-6 mr-0 mb-0 font-medium text-gray-600
+                    absolute "
                       >
                         Vaccine
                       </p>
                       <OnKeySearchDropdown onSelect={setVaccine}/>
                     </div>
+
+                    
                     <div className="relative">
                       <button
                         className={`w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white  bg-indigo-500

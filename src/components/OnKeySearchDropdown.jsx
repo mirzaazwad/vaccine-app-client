@@ -4,7 +4,7 @@ import AsyncSelect from "react-select/async";
 const promiseOptions = async (inputValue) => {
   try {
     const response = await fetch(
-      `https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/generic_medicine/search/${inputValue}`
+      `/api/generic_medicine/search/${inputValue}`
     );
     const data = await response.json();
 

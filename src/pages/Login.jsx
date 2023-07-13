@@ -34,7 +34,7 @@ const Login = () => {
 
     try {
       const user = await axios.post(
-        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/auth/login",
+        "/api/auth/login",
         {
           n_id: nid,
           password
