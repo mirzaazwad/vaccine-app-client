@@ -5,14 +5,24 @@ const VaccineDropdown = ({ onSelect }) => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
 
   const getVaccines = async () => {
-    try {
-      const response = await axios.get(
-        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine/view_all_vaccines"
-      );
-      setDropdownOptions(response.data.vaccine_info || response.data.data);
-    } catch (error) {
-      console.error("Error fetching dropdown options:", error);
-    }
+    const config = {
+        header: {
+            "Content-Type": "application/json",
+        },
+    };
+
+    const res = await axios.get(
+        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine_info/view_all_vaccines",
+        config
+    ).then((response) => {
+        const res = response.data.vaccine_info;
+        return res;
+    }).catch((err) => {
+        console.log(err);
+        return [];
+    });
+    setDropdownOptions(res);
+
   };
 
   useEffect(() => {
@@ -32,7 +42,7 @@ const VaccineDropdown = ({ onSelect }) => {
 
   return (
     <>
-     
+        
       <select
         id="vaccineDropdown"
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
