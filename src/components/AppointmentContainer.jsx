@@ -36,7 +36,7 @@ const AppointmentContainer = ({nid}) => {
             vaccine_name={option.vaccine_name}
             vaccine_date={option.vaccination_date}
             hospital_name={option.administeredAt}
-            doses_taken={option.do}
+            doses_taken={option.dose_no}
           />
         ))}
         </div>

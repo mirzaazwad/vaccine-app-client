@@ -1,6 +1,23 @@
 import React from "react";
 
 const UserCard = () => {
+  const [nid, setNid] = useState("");
+  useEffect(() => {
+    if (localStorage.nid) {
+      setNid(localStorage.nid);
+    }
+  }, [])
+
+  const fetchUserInfo = async () => {
+    try {
+
+    } catch (error) {
+
+    }
+
+  }
+
+
   return (
     <div className="min-h-screen py-3 flex items-center justify-center px-4 bg-indigo-100">
       <div className="max-w-4xl  bg-white w-full rounded-xl shadow-xl  border border-indigo-300">
