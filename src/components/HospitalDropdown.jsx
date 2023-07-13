@@ -5,8 +5,7 @@ const HospitalDropdown = () => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the database
-    axios.get("/api/dropdown-options")
+    axios.get("/api/hospitals/view_hospitals")
       .then(response => {
         setDropdownOptions(response.data);
       })
