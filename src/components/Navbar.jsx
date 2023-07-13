@@ -5,7 +5,7 @@ import PdfCertificate from "./PdfCertificate";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [nid, setNid] = useState("");
+  const nid=localStorage.getItem("nid")
   const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -25,8 +25,6 @@ const Navbar = () => {
       window.location.reload();
     }
   };
-
-  const nid=localStorage.getItem("nid");
 
   return (
     <nav className="bg-white border-gray-200">
