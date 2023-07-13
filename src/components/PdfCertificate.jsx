@@ -1,15 +1,15 @@
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import axios from 'axios';
 
 const PdfCertificate = ({nid}) => {
 
   const getUserInformation=async()=>{
     const result=await axios.get("https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine/view_vaccines_completed/"+nid)
     .then((response)=>{
-      console.log(response.data);
-      return response.data;
+      console.log(response.data.data);
+      return response.data.data;
     }).catch((err)=>{
       console.log(err);
       return [];
@@ -32,6 +32,7 @@ const PdfCertificate = ({nid}) => {
   const generatePDF = async() => {
     const result=await getUserInformation();
     const result2=await getUserDetails();
+    const tableData=result.map((data) =>[(new Date(data.vaccination_date)).toDateString(),data.vaccine_name,data.dose_no,data.administeredAt])
     const documentDefinition = {
       content: [
         { text: 'Vaccine Certification', style: 'header' },
@@ -43,8 +44,13 @@ const PdfCertificate = ({nid}) => {
         { text: '\n\n' },
         { text: 'Dates and Vaccines Taken:', style: 'subheader' },
         {
-          ul: Object.entries(result.data).map((data) => `Date: ${data.vaccination_date} - Vaccine Name: ${data.vaccination_name} - Dose: ${data.dose_no} from Hospital: ${data.administeredAt}`),
-        }
+          table: {
+            body: [
+              ['Date', 'Vaccine Name', 'Dose No.', 'Administered At'],
+              ...tableData,
+            ],
+          },
+        },
       ],
       footer: {
         text: 'Received from vaccine-app.netlify',
