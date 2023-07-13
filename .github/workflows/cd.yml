@@ -24,18 +24,10 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       -
-        name: Build and push server
-        uses: docker/build-push-action@v4
-        with:
-          context: ./server
-          file: ./server/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/vaccine-app-server:latest
-      -
         name: Build and push client
         uses: docker/build-push-action@v4
         with:
-          context: ./client
-          file: ./client/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/vaccine-app-client:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/vaccine-app-server:latest
