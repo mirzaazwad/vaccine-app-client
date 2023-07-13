@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import PdfCertificate from "./PdfCertificate";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,9 +13,12 @@ const Navbar = () => {
   const handleLogout = () => {
     if (localStorage.token) {
       localStorage.removeItem("token");
+      localStorage.removeItem("nid");
       window.location.reload();
     }
   };
+
+  const nid=localStorage.getItem("nid");
 
   return (
     <nav className="bg-white border-gray-200">
@@ -84,15 +88,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link to="/welcome">
-                <button
-                  type="button"
-                  title="Start buying"
-                  className="w-full py-3 px-6 text-center rounded-full transition text-indigo-900  bg-indigo-300 hover:bg-indigo-500 hover:text-white active:bg-indigo-400 focus:bg-indigo-300 sm:w-max"
-                >
-                  <span className="block font-semibold text-lg">
-                    Download Certificate
-                  </span>
-                </button>
+                <PdfCertificate nid={nid}/>
               </Link>
             </li>
 

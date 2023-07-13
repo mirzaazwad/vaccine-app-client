@@ -32,7 +32,6 @@ const LandingPage = () => {
                   BD <span className="text-indigo-600">Vaccine</span>
                 </span>
               </a>
-
               <button
                 aria-label="hamburger"
                 id="hamburger"
