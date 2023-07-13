@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import VaccineInfo from "./pages/VaccineInfo";
 import VaccineRegistration from "./pages/VaccineRegistration";
+import Loading from "./components/Loading";
 function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
   // const navigate = useNavigate();
@@ -42,6 +43,11 @@ function App() {
       checkAuthenticated();
     }
   }, []);
+
+  if (localStorage.token && !isAuthenticated) {
+    // Render loading state or redirect to a loading page
+    return <Loading />;
+  }
 
   return (
     <>
@@ -102,8 +108,14 @@ function App() {
           <Route
             exact
             path="/vaccine-registration"
-            element={<VaccineRegistration />}
-          />
+            element={
+              isAuthenticated ? (
+                <VaccineRegistration />
+              ) : (
+                <Navigate to="/signin" replace />
+              )
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </>
