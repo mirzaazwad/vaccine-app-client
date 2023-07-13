@@ -1,17 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import vaccineRegistration from "../assets/vaccineRegistration.png";
 import HospitalDropdown from "../components/HospitalDropdown";
 import VaccineDropdown from "../components/VaccineDropdown";
 import axios from "axios";
 import { ActivePageType } from "../../utils/ActivePageType";
-import { useNavigate } from "react-router-dom";
+import GreenAlert from "../components/GreenAlert";
+import RedAlert from "../components/RedAlert";
+import { useNavigate } from "react-router";
 
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
   const [hospital, setHospital] = useState();
   const [vaccine, setVaccine] = useState();
-  const navigate=useNavigate();
+  const [responseMessage, setResponseMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [nid, setNid] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const clearResponseMessages = () => {
+      setErrorMessage("");
+      if (responseMessage) {
+        setResponseMessage("");
+        navigate("/vaccines/"+localStorage.nid);
+      }
+    };
+
+    if (responseMessage) {
+      const timer = setTimeout(clearResponseMessages, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [responseMessage]);
+
+  useEffect(() => {
+    const clearErrorMessages = () => {
+      setErrorMessage("");
+    };
+
+    if (errorMessage) {
+      const timer = setTimeout(clearErrorMessages, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
   const handleVaccineRegistration = async (e) => {
     console.log();
     e.preventDefault();
@@ -26,8 +58,8 @@ const VaccineRegistration = () => {
       n_id: localStorage.nid,
       vaccine_id: vaccine._id,
       administeredAt: hospital,
-      vaccine_name: vaccine.vaccine_name
-    }
+      vaccine_name: vaccine.vaccine_name,
+    };
     console.log(body);
 
     try {
@@ -37,9 +69,8 @@ const VaccineRegistration = () => {
           n_id: localStorage.nid,
           vaccine_id: vaccine._id,
           administeredAt: hospital,
-          vaccine_name: vaccine.vaccine_name
-        }
-        ,
+          vaccine_name: vaccine.vaccine_name,
+        },
         config
       );
 
@@ -47,18 +78,23 @@ const VaccineRegistration = () => {
       console.log(response);
       if (response.success) {
         setDisableFields(true);
-        navigate("/vaccines/"+localStorage.nid);
+        setErrorMessage("");
+        setResponseMessage(response.message);
+        // navigate("/vaccines");
         // window.location.reload();
       } else {
+        setErrorMessage("");
         setResponseMessage(response.message);
       }
-    } catch (error) { }
+    } catch (error) {
+      setResponseMessage("");
+      setErrorMessage(response.message);
+    }
   };
-
 
   return (
     <>
-      <Navbar active_page={ActivePageType.VaccineRegistration}/>
+      <Navbar active_page={ActivePageType.VaccineRegistration} />
       <fieldset disabled={disableFields}>
         <form
           className="bg-white relative lg:py-4"
@@ -76,7 +112,10 @@ const VaccineRegistration = () => {
               </div>
               <div className="w-full mt-20 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
                 <div className="flex flex-col items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
-                  <button type="submit" className="w-full text-4xl font-medium text-center leading-snug font-serif">
+                  <button
+                    type="submit"
+                    className="w-full text-4xl font-medium text-center leading-snug font-serif"
+                  >
                     Book Your Vaccination
                   </button>
                   <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
@@ -88,7 +127,11 @@ const VaccineRegistration = () => {
                         Hospital
                       </p>
                       {/* <OnKeySearchDropdown onSelect={setHospital}/> */}
-                      <HospitalDropdown onSelect={(selectedHospital) => setHospital(selectedHospital)} />
+                      <HospitalDropdown
+                        onSelect={(selectedHospital) =>
+                          setHospital(selectedHospital)
+                        }
+                      />
                     </div>
 
                     <div className="relative">
@@ -98,9 +141,16 @@ const VaccineRegistration = () => {
                       >
                         Vaccine
                       </p>
-                      <VaccineDropdown onSelect={(selectedVaccine) => setVaccine(selectedVaccine)} />
+                      <VaccineDropdown
+                        onSelect={(selectedVaccine) =>
+                          setVaccine(selectedVaccine)
+                        }
+                      />
                     </div>
-
+                    {errorMessage && <RedAlert alert_message={errorMessage} />}
+                    {!errorMessage && responseMessage && (
+                      <GreenAlert alert_message={responseMessage} />
+                    )}
 
                     <div className="relative">
                       <button
