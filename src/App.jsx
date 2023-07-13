@@ -95,7 +95,7 @@ function App() {
 
           <Route
             exact
-            path="/vaccines"
+            path="/vaccines/:nid"
             element={
               isAuthenticated ? (
                 <VaccineInfo />
