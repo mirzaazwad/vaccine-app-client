@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if(localStorage.nid){
-      setNid(nid);
+      setNid(localStorage.nid);
     }
   }, [])
   
@@ -82,7 +82,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/vaccines">
+            <Link to={`/vaccines/${nid}`}>
                 <div className="w-full py-3 px-6 text-center rounded-full transition bg-white focus:bg-indigo-300 sm:w-max">
                   <span className="block text-indigo-900 font-semibold text-lg">
                     Vaccines
