@@ -1,34 +1,51 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const HospitalDropdown = () => {
+const HospitalDropdown = ({ onSelect }) => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
 
+  const getHospitals = async () => {
+    try {
+      const response = await axios.get(
+        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/hospital/view_hospitals"
+      );
+      setDropdownOptions(response.data.hospital_info || response.data.data);
+    } catch (error) {
+      console.error("Error fetching dropdown options:", error);
+    }
+  };
+
   useEffect(() => {
-    // Fetch data from the database
-    axios.get("/api/dropdown-options")
-      .then(response => {
-        setDropdownOptions(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching dropdown options:", error);
-      });
+    getHospitals();
   }, []);
+
+  const handleSelectHospital = (event) => {
+    const selectedValue = event.target.value;
+    const selectedOption = dropdownOptions.find(
+      (option) => option._id === selectedValue
+    );
+    if (selectedOption) {
+      onSelect(selectedOption.hospital_name);
+      console.log(selectedOption.hospital_name);
+    }
+  };
 
   return (
     <>
-      <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown hover <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-      </svg></button>
-      <div id="dropdownHover" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-          {dropdownOptions.map(option => (
-            <li key={option.id}>
-              <a href={option.url} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{option.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <select
+        id="hospitalDropdown"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        onChange={handleSelectHospital}
+      >
+        <option value="" disabled selected>
+          Choose a hospital
+        </option>
+        {dropdownOptions.map((option) => (
+          <option key={option._id} value={option._id}>
+            {option.hospital_name}
+          </option>
+        ))}
+      </select>
     </>
   );
 };

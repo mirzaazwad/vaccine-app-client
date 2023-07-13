@@ -1,7 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import VaccineCard from "./VaccineCard";
 
 const VaccineCardContainer = () => {
+  const [completedVaccines, setCompletedVaccines] = useState([]);
+  const getHospitals = async () => {
+    try {
+      const response = await axios.get(
+        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine/view_vaccines_completed/12312"
+      );
+      setCompletedVaccines(response.data.hospital_info || response.data.data);
+    } catch (error) {
+      console.error("Error fetching dropdown options:", error);
+    }
+  };
+
+  useEffect(() => {
+    getHospitals();
+  }, []);
+
   return (
     <section className="min-h-screen bg-indigo-200">
       <div className="container px-6 py-10 mx-auto">

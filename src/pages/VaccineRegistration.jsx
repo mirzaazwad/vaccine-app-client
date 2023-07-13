@@ -1,16 +1,57 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import OnKeySearchDropdown from "../components/OnKeySearchDropdown";
 import vaccineRegistration from "../assets/vaccineRegistration.png";
 import HospitalDropdown from "../components/HospitalDropdown";
+import VaccineDropdown from "../components/VaccineDropdown";
+import axios from "axios";
 
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
-  const [hospital, setHospital] = useState("");
-  const [vaccine, setVaccine] = useState("");
-  const handleVaccineRegistration = (e) => {
+  const [hospital, setHospital] = useState();
+  const [vaccine, setVaccine] = useState();
+  const handleVaccineRegistration = async (e) => {
+    console.log();
     e.preventDefault();
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = {
+      n_id: localStorage.nid,
+      vaccine_id: vaccine._id,
+      administeredAt: hospital,
+      vaccine_name: vaccine.vaccine_name
+    }
+    console.log(body);
+
+    try {
+      const register = await axios.post(
+        "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine/vaccine_register",
+        {
+          n_id: localStorage.nid,
+          vaccine_id: vaccine._id,
+          administeredAt: hospital,
+          vaccine_name: vaccine.vaccine_name
+        }
+        ,
+        config
+      );
+
+      const response = register.data;
+      console.log(response);
+      if (response.success) {
+        setDisableFields(true);
+        navigate("/vaccines");
+        // window.location.reload();
+      } else {
+        setResponseMessage(response.message);
+      }
+    } catch (error) { }
   };
+
+
   return (
     <>
       <Navbar />
@@ -31,11 +72,11 @@ const VaccineRegistration = () => {
               </div>
               <div className="w-full mt-20 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
                 <div className="flex flex-col items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
-                  <p className="w-full text-4xl font-medium text-center leading-snug font-serif">
+                  <button type="submit" className="w-full text-4xl font-medium text-center leading-snug font-serif">
                     Book Your Vaccination
-                  </p>
+                  </button>
                   <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                  <div className="relative">
+                    <div className="relative">
                       <p
                         className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-6 mr-0 mb-12 font-medium text-gray-600
                     absolute"
@@ -43,7 +84,7 @@ const VaccineRegistration = () => {
                         Hospital
                       </p>
                       {/* <OnKeySearchDropdown onSelect={setHospital}/> */}
-                      <HospitalDropdown />
+                      <HospitalDropdown onSelect={(selectedHospital) => setHospital(selectedHospital)} />
                     </div>
 
                     <div className="relative">
@@ -53,10 +94,10 @@ const VaccineRegistration = () => {
                       >
                         Vaccine
                       </p>
-                      <OnKeySearchDropdown onSelect={setVaccine}/>
+                      <VaccineDropdown onSelect={(selectedVaccine) => setVaccine(selectedVaccine)} />
                     </div>
 
-                    
+
                     <div className="relative">
                       <button
                         className={`w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white  bg-indigo-500

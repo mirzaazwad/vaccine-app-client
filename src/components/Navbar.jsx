@@ -5,10 +5,18 @@ import PdfCertificate from "./PdfCertificate";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [nid, setNid] = useState("");
   const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    if(localStorage.nid){
+      setNid(nid);
+    }
+  }, [])
+  
 
   const handleLogout = () => {
     if (localStorage.token) {
