@@ -5,18 +5,18 @@ import PdfCertificate from "./PdfCertificate";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const nid=localStorage.getItem("nid")
+  const [nid, setNid] = useState("");
   const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   useEffect(() => {
-    if(localStorage.nid){
+    if (localStorage.nid) {
       setNid(localStorage.nid);
     }
   }, [])
-  
+
 
   const handleLogout = () => {
     if (localStorage.token) {
@@ -59,9 +59,8 @@ const Navbar = () => {
           </svg>
         </button>
         <div
-          className={`${
-            menuOpen ? "block" : "hidden"
-          } w-full md:block md:w-auto`}
+          className={`${menuOpen ? "block" : "hidden"
+            } w-full md:block md:w-auto`}
           id="navbar-default"
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white ">
@@ -84,7 +83,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-            <Link to={`/vaccines/${nid}`}>
+              <Link to={`/vaccines/${nid}`}>
                 <div className="w-full py-3 px-6 text-center rounded-full transition bg-white focus:bg-indigo-300 sm:w-max">
                   <span className="block text-indigo-900 font-semibold text-lg">
                     Vaccines
@@ -94,7 +93,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link to="/welcome">
-                <PdfCertificate nid={nid}/>
+                <PdfCertificate nid={nid} />
               </Link>
             </li>
 
