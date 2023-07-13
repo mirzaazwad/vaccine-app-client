@@ -36,7 +36,9 @@ const AppointmentContainer = ({ nid }) => {
                 <VaccineCard
                   key={option._id}
                   vaccine_name={option.vaccine_name}
-                  vaccine_date={option.vaccination_date}
+                  vaccine_date={new Date(
+                    option.vaccination_date
+                  ).toLocaleDateString()}
                   hospital_name={option.administeredAt}
                   doses_taken={option.dose_no}
                 />
