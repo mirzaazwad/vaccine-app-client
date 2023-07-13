@@ -4,6 +4,7 @@ import vaccineRegistration from "../assets/vaccineRegistration.png";
 import HospitalDropdown from "../components/HospitalDropdown";
 import VaccineDropdown from "../components/VaccineDropdown";
 import axios from "axios";
+import { ActivePageType } from "../../utils/ActivePageType";
 
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
@@ -54,7 +55,7 @@ const VaccineRegistration = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar active_page={ActivePageType.VaccineRegistration}/>
       <fieldset disabled={disableFields}>
         <form
           className="bg-white relative lg:py-4"
