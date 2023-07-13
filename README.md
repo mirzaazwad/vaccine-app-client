@@ -1,2 +1,2 @@
-# Vaccine-App
-Vaccine App
+# vaccine-app
+BUET CSE Fest Hackathon
