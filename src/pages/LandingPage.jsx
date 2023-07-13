@@ -99,7 +99,7 @@ const LandingPage = () => {
               </h1>
               <p className="mt-8 text-gray-700 lg:w-10/12">
                 Stay informed and up-to-date with your vaccine status &nbsp;
-                <a href="/login" className="text-indigo-700">
+                <a href="/signin" className="text-indigo-700">
                   here
                 </a>
                 &nbsp;at your fingertips.
