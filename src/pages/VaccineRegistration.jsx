@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import OnKeySearchDropdown from "../components/OnKeySearchDropdown";
 import vaccineRegistration from "../assets/vaccineRegistration.png";
 import HospitalDropdown from "../components/HospitalDropdown";
+import VaccineDropdown from "../components/VaccineDropDown";
 
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
@@ -43,7 +44,7 @@ const VaccineRegistration = () => {
                         Hospital
                       </p>
                       {/* <OnKeySearchDropdown onSelect={setHospital}/> */}
-                      <HospitalDropdown />
+                      <HospitalDropdown onSelect={(selectedHospital) => setHospital(selectedHospital)} />
                     </div>
 
                     <div className="relative">
@@ -53,7 +54,7 @@ const VaccineRegistration = () => {
                       >
                         Vaccine
                       </p>
-                      <OnKeySearchDropdown onSelect={setVaccine}/>
+                      <VaccineDropdown onSelect={(selectedVaccine) => setVaccine(selectedVaccine)}/>
                     </div>
 
                     
