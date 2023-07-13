@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import vaccineRegistration from "../assets/vaccineRegistration.png";
 import HospitalDropdown from "../components/HospitalDropdown";
 import VaccineDropdown from "../components/VaccineDropdown";
+import axios from "axios";
+
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
   const [hospital, setHospital] = useState();
@@ -16,15 +18,24 @@ const VaccineRegistration = () => {
       },
     };
 
+    const body = {
+      n_id: localStorage.nid,
+      vaccine_id: vaccine._id,
+      administeredAt: hospital,
+      vaccine_name: vaccine.vaccine_name
+    }
+    console.log(body);
+
     try {
       const register = await axios.post(
         "https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine/vaccine_register",
         {
           n_id: localStorage.nid,
           vaccine_id: vaccine._id,
-          administeredAt:hospital.hospital_name,
+          administeredAt: hospital,
           vaccine_name: vaccine.vaccine_name
-        },
+        }
+        ,
         config
       );
 
@@ -32,15 +43,15 @@ const VaccineRegistration = () => {
       console.log(response);
       if (response.success) {
         setDisableFields(true);
-        navigate("/welcome");
+        navigate("/vaccines");
         // window.location.reload();
       } else {
         setResponseMessage(response.message);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
-  
+
   return (
     <>
       <Navbar />
@@ -65,7 +76,7 @@ const VaccineRegistration = () => {
                     Book Your Vaccination
                   </button>
                   <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                  <div className="relative">
+                    <div className="relative">
                       <p
                         className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-6 mr-0 mb-12 font-medium text-gray-600
                     absolute"
@@ -83,10 +94,10 @@ const VaccineRegistration = () => {
                       >
                         Vaccine
                       </p>
-                      <VaccineDropdown onSelect={(selectedVaccine) => setVaccine(selectedVaccine)}/>
+                      <VaccineDropdown onSelect={(selectedVaccine) => setVaccine(selectedVaccine)} />
                     </div>
 
-                    
+
                     <div className="relative">
                       <button
                         className={`w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white  bg-indigo-500
