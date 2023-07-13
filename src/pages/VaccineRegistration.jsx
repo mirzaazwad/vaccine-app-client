@@ -5,14 +5,17 @@ import HospitalDropdown from "../components/HospitalDropdown";
 import VaccineDropdown from "../components/VaccineDropdown";
 import axios from "axios";
 import { ActivePageType } from "../../utils/ActivePageType";
+import { useNavigate } from "react-router-dom";
 
 const VaccineRegistration = () => {
   const [disableFields, setDisableFields] = useState(false);
   const [hospital, setHospital] = useState();
   const [vaccine, setVaccine] = useState();
+  const navigate=useNavigate();
   const handleVaccineRegistration = async (e) => {
     console.log();
     e.preventDefault();
+    setDisableFields(true);
     const config = {
       header: {
         "Content-Type": "application/json",
@@ -44,7 +47,7 @@ const VaccineRegistration = () => {
       console.log(response);
       if (response.success) {
         setDisableFields(true);
-        navigate("/vaccines");
+        navigate("/vaccines/"+localStorage.nid);
         // window.location.reload();
       } else {
         setResponseMessage(response.message);
@@ -101,6 +104,7 @@ const VaccineRegistration = () => {
 
                     <div className="relative">
                       <button
+                        disabled={disableFields}
                         className={`w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white  bg-indigo-500
                     rounded-lg transition duration-200 hover:bg-indigo-600`}
                       >
