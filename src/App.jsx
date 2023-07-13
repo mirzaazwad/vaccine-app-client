@@ -28,7 +28,6 @@ function App() {
       );
 
       const response = res.data;
-      
 
       if (response.message === "Token is valid") {
         setisAuthenticated(true);
