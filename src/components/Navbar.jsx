@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import PdfCertificate from "./PdfCertificate";
+import { ActivePageType } from "../../utils/ActivePageType";
 
-const Navbar = () => {
+const Navbar = ({active_page}) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [nid, setNid] = useState("");
   const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  useEffect(() => {
+    if (localStorage.nid) {
+      setNid(localStorage.nid);
+    }
+  }, [])
+
+
   const handleLogout = () => {
     if (localStorage.token) {
       localStorage.removeItem("token");
+      localStorage.removeItem("nid");
       window.location.reload();
     }
   };
@@ -49,13 +60,12 @@ const Navbar = () => {
           </svg>
         </button>
         <div
-          className={`${
-            menuOpen ? "block" : "hidden"
-          } w-full md:block md:w-auto`}
+          className={`${menuOpen ? "block" : "hidden"
+            } w-full md:block md:w-auto`}
           id="navbar-default"
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white ">
-            <li>
+          <li className={ active_page ===ActivePageType.Dashboard? `border-x-0 border-b-2 border-t-0 border-indigo-400`: ""}>
               <Link to="/welcome">
                 <div className="w-full py-3 px-6 text-center rounded-full transition bg-white focus:bg-indigo-300 sm:w-max">
                   <span className="block text-indigo-900 font-semibold text-lg">
@@ -64,7 +74,7 @@ const Navbar = () => {
                 </div>
               </Link>
             </li>
-            <li>
+            <li className={ active_page ===ActivePageType.VaccineRegistration? `border-x-0 border-b-2 border-t-0 border-indigo-400`: ""}>
               <Link to="/vaccine-registration">
                 <div className="w-full py-3 px-6 text-center rounded-full transition bg-white focus:bg-indigo-300 sm:w-max">
                   <span className="block text-indigo-900 font-bold text-lg">
@@ -73,8 +83,8 @@ const Navbar = () => {
                 </div>
               </Link>
             </li>
-            <li>
-              <Link to="/vaccines">
+            <li className={ active_page ===ActivePageType.VaccineHistory? `border-x-0 border-b-2 border-t-0 border-indigo-400`: ""}>
+              <Link to={`/vaccines/${nid}`}>
                 <div className="w-full py-3 px-6 text-center rounded-full transition bg-white focus:bg-indigo-300 sm:w-max">
                   <span className="block text-indigo-900 font-semibold text-lg">
                     Vaccines
@@ -84,15 +94,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link to="/welcome">
-                <button
-                  type="button"
-                  title="Start buying"
-                  className="w-full py-3 px-6 text-center rounded-full transition text-indigo-900  bg-indigo-300 hover:bg-indigo-500 hover:text-white active:bg-indigo-400 focus:bg-indigo-300 sm:w-max"
-                >
-                  <span className="block font-semibold text-lg">
-                    Download Certificate
-                  </span>
-                </button>
+                <PdfCertificate nid={nid} />
               </Link>
             </li>
 

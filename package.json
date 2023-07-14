@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@jridgewell/sourcemap-codec": "^1.4.15",
     "axios": "^1.4.0",
+    "pdfmake": "^0.2.7",
+    "flowbite": "^1.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.1",
