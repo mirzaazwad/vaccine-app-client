@@ -7,13 +7,13 @@ const AppointmentContainer = ({ nid }) => {
   const [vaccineAppointments, setVaccineAppointments] = useState([]);
 
   const getVaccineAppointments = async () => {
-    console.log(nid);
+    // console.log(nid);
     try {
       const response = await axios.get(
         `https://vaccine-app-server-kilfewcikq-uc.a.run.app/api/vaccine/view_vaccine_appointments/${nid}`
       );
       setVaccineAppointments(response.data.data);
-      console.log(vaccineAppointments);
+      // console.log(vaccineAppointments);
     } catch (error) {
       console.error("Error fetching dropdown options:", error);
     }

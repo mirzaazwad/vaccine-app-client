@@ -34,7 +34,7 @@ function App() {
         setisAuthenticated(true);
       }
     } catch (err) {
-      console.log(err.message);
+      // console.log(err.message);
     }
   };
 
