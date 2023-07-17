@@ -22,9 +22,6 @@ This project is divided into 2 segmrents in 2 seperate repositories:
 - client: [Client Side](https://github.com/NafisaMaliyat-iut/vaccine-app-client)
 - server: [Server Side](https://github.com/mirzaazwad/vaccine-app-server)
 
-  Finally this project is deployed so I encourage checking out the deployed project [Project URL](https://vacine-app.netlify.app/welcome)
-
-
   Those who contributed heavily to this project includes:
   - [Nafisa Maliyat](https://github.com/NafisaMaliyat-iut)
 
